@@ -1,21 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react"
 
-const average = (arr) =>
-    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+const WatchedMovies = ({ movieResults }) => {
+    const [isOpen2, setIsOpen2] = useState(true)
+    const [watchedMovies, setWatchedMovies] = useState(movieResults)
 
-const WatchedMovies = ({ tempWatchedData }) => {
-    const [isOpen2, setIsOpen2] = useState(true);
-    const [watched, setWatched] = useState(tempWatchedData);
-
-    const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-    const avgUserRating = average(watched.map((movie) => movie.userRating));
-    const avgRuntime = average(watched.map((movie) => movie.runtime));
-
+    const deleteMovieFromWatched = (id) => {
+        const movies = watchedMovies.filter(movie => movie.imdbID !== id)
+        setWatchedMovies(movies)
+    }
 
     return (
         <>
-
-            <div className="box">
+            <div>
                 <button
                     className="btn-toggle"
                     onClick={() => setIsOpen2((open) => !open)}
@@ -26,53 +22,37 @@ const WatchedMovies = ({ tempWatchedData }) => {
                     <>
                         <div className="summary">
                             <h2>Movies you watched</h2>
-                            <div>
-                                <p>
-                                    <span>#️⃣</span>
-                                    <span>{watched.length} movies</span>
-                                </p>
-                                <p>
-                                    <span>⭐️</span>
-                                    <span>{avgImdbRating}</span>
-                                </p>
-                                <p>
-                                    <span>🌟</span>
-                                    <span>{avgUserRating}</span>
-                                </p>
-                                <p>
-                                    <span>⏳</span>
-                                    <span>{avgRuntime} min</span>
-                                </p>
-                            </div>
                         </div>
 
                         <ul className="list">
-                            {watched.map((movie) => (
-                                <li key={movie.imdbID}>
+                            {watchedMovies?.map((movie) =>
+                                < li key={movie.imdbID} >
+
                                     <img src={movie.Poster} alt={`${movie.Title} poster`} />
                                     <h3>{movie.Title}</h3>
                                     <div>
+                                        <p>
+                                            <span>📆</span>
+                                            <span>{movie.Year}</span>
+                                        </p>
                                         <p>
                                             <span>⭐️</span>
                                             <span>{movie.imdbRating}</span>
                                         </p>
                                         <p>
-                                            <span>🌟</span>
-                                            <span>{movie.userRating}</span>
-                                        </p>
-                                        <p>
                                             <span>⏳</span>
-                                            <span>{movie.runtime} min</span>
+                                            <span>{movie.Runtime}</span>
                                         </p>
+                                        <h4 onClick={() => deleteMovieFromWatched(movie.imdbID)}>❌</h4>
                                     </div>
-                                </li>
-                            ))}
+
+                                </li>)}
                         </ul>
                     </>
                 )}
-            </div>
-
+            </div >
         </>
     )
+
 }
 export default WatchedMovies
