@@ -3,9 +3,9 @@ import WatchedMovies from "./WatchedMovies"
 
 const MovieResults = ({ moviesFound, movieId }) => {
     const [isOpen1, setIsOpen1] = useState(true)
+
     const handleSelectedMovie = (id) => {
         movieId(id)
-
     }
     return (
         <>

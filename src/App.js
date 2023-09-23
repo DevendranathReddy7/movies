@@ -34,13 +34,12 @@ const App = () => {
   const handleSelectedMovie = (id) => {
     setSelectedMovieId(id)
   }
-
   return (
     <>
       <Navbar query={query} setQuery={setQuery} noOfMovies={newMovies?.length} />
       <div className="main">
         <MovieResults moviesFound={searchResults} movieId={handleSelectedMovie} />
-        <SelectedMovie selectedMovie={selectedMovieId} moviesFound={newMovies} />
+        <SelectedMovie selectedMovie={selectedMovieId} moviesFound={newMovies} onClose={handleSelectedMovie} />
       </div>
     </>
   )

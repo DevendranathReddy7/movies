@@ -1,84 +1,11 @@
 import { useEffect, useState } from 'react'
 import StarRating from './StarRating'
 import WatchedMovies from './WatchedMovies'
-const SelectedMovie = ({ selectedMovie, moviesFound }) => {
+
+const SelectedMovie = ({ selectedMovie, moviesFound, onClose }) => {
     const [movie, setMovie] = useState({})
     const [close, setClose] = useState(true)
-    const [watchedMovies, setWatchedMovies] = useState([{
-        Actors
-            :
-            "Aamir Khan, Katrina Kaif, Abhishek Bachchan",
-        Awards
-            :
-            "21 wins & 23 nominations",
-        BoxOffice
-            :
-            "$8,031,955",
-        Country
-            :
-            "India, United States",
-        DVD
-            :
-            "18 Nov 2016",
-        Director
-            :
-            "Vijay Krishna Acharya",
-        Genre
-            :
-            "Action, Crime, Drama",
-        Language
-            :
-            "Hindi, English",
-        Metascore
-            :
-            "61",
-        Plot
-            :
-            "Jai and Ali return to catch the clown thief, Sahir, who has the City of Chicago captive. Watch an unconventional battle of revenge that will thrill you.",
-        Poster
-            :
-            "https://m.media-amazon.com/images/M/MV5BM2E0NWJlNzYtZjFlZS00NDU4LWI0OTAtYTZlYjc2MmQ2MjdmXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
-        Production
-            :
-            "N/A",
-        Rated
-            :
-            "Not Rated",
-        Released
-            :
-            "20 Dec 2013",
-        Response
-            :
-            "True",
-        Runtime
-            :
-            "172 min",
-        Title
-            :
-            "Dhoom 13",
-        Type
-            :
-            "movie",
-        Website
-            :
-            "N/A",
-        Writer
-            :
-            "Vijay Krishna Acharya, Aditya Chopra",
-        Year
-            :
-            "2013",
-        imdbID
-            :
-            "tt1833673",
-        imdbRating
-            :
-            "5.4",
-        imdbVotes
-            :
-            "47,995"
-    }])
-
+    const [watchedMovies, setWatchedMovies] = useState([])
     const {
         Title: title,
         Year: year,
@@ -92,6 +19,7 @@ const SelectedMovie = ({ selectedMovie, moviesFound }) => {
         Genre: genre,
         imdbID
     } = movie;
+
     useEffect(() => {
         const clickedMovie = async () => {
             const res = await fetch(`http://www.omdbapi.com/?apikey=e551638&i=${selectedMovie}`)
@@ -105,33 +33,28 @@ const SelectedMovie = ({ selectedMovie, moviesFound }) => {
     useEffect(() => {
         setClose(true)
     }, [])
+
     const handleClose = () => {
         setClose(cls => !cls)
+        onClose('')
     }
 
-    useEffect(() => {
-
-    }, [watchedMovies])
-
     const addMovietoWatched = (id) => {
-
-        {
+        if (!watchedMovies?.some(movie => movie.imdbID === id)) {
             moviesFound?.map(move => move.imdbID === id ?
                 setWatchedMovies(mov => [...mov, move]) : '')
         }
-        // console.log(watchedMovies)
+
         // {
         //     moviesFound?.map(move => move.imdbID === id ?
-
-        //         watchedMovies.map(movie => movie.imdbID === id ? (console.log('in movies')) :
-        //             setWatchedMovies(mov => [...mov, move])) : '')
+        //         setWatchedMovies(mov => [...mov, move]) : '')
         // }
 
     }
 
     return (
         <div className='box' >
-            {close ? <WatchedMovies movieResults={watchedMovies} /> :
+            {close || selectedMovie === '' ? <WatchedMovies movieResults={watchedMovies} /> :
                 (<div className="details">
                     <header>
                         <button className="btn-back" onClick={handleClose}>
