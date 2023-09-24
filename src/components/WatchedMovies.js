@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-const WatchedMovies = ({ movieResults }) => {
+const WatchedMovies = ({ movieResults, userRate }) => {
     const [isOpen2, setIsOpen2] = useState(true)
     const [watchedMovies, setWatchedMovies] = useState(movieResults)
 
@@ -37,7 +37,8 @@ const WatchedMovies = ({ movieResults }) => {
                                         </p>
                                         <p>
                                             <span>⭐️</span>
-                                            <span>{movie.imdbRating}</span>
+                                            <span className="span-rating">{movie.imdbRating}</span>
+                                            {/* <span className="span-rate2">Ratings are in below format:<strong>Your Rating/IMDB Rating</strong></span> */}
                                         </p>
                                         <p>
                                             <span>⏳</span>
@@ -45,7 +46,6 @@ const WatchedMovies = ({ movieResults }) => {
                                         </p>
                                         <h4 onClick={() => deleteMovieFromWatched(movie.imdbID)}>❌</h4>
                                     </div>
-
                                 </li>)}
                         </ul>
                     </>

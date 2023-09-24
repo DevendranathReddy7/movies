@@ -50,9 +50,6 @@ body {
   justify-content: space-around;
 }
 
-
-
-
 .box {
   width: 42rem;
   max-width: 42rem;
@@ -178,6 +175,20 @@ body {
 
 .list h3 {
   font-size: 1.8rem;
+}
+
+.span-rate2 {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  color: black;
+  padding: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 9px;
+}
+
+.span-rating:hover+.span-rate2 {
+  display: block;
 }
 
 .list div {

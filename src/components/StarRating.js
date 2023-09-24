@@ -12,7 +12,7 @@ const starContainerStyle = {
 }
 
 
-const StarRating = ({ maxRating = 5, color = 'yellow', size = 30 }) => { //maxRating =5 if maxRating is not sent in props then 5 will set has default value.
+const StarRating = ({ maxRating = 5, color = 'yellow', size = 30, onSetRating }) => { //maxRating =5 if maxRating is not sent in props then 5 will set has default value.
     const [rating, setRating] = useState(0)
     const [tempRating, setTempRating] = useState(0)
     const textStyle = {
@@ -26,7 +26,7 @@ const StarRating = ({ maxRating = 5, color = 'yellow', size = 30 }) => { //maxRa
         <div style={containerStyle}>
             <div style={starContainerStyle}>
                 {Array.from({ length: maxRating }, (_, i) => (
-                    <Star key={i} onRate={() => setRating(i + 1)}
+                    <Star key={i} onRate={() => { setRating(i + 1); onSetRating(i + 1); }}
                         full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
                         onHover={() => setTempRating(i + 1)}
                         onLeave={() => setTempRating(0)}

@@ -1,9 +1,7 @@
 import { useState } from "react"
-import WatchedMovies from "./WatchedMovies"
 
-const MovieResults = ({ moviesFound, movieId }) => {
+const MovieResults = ({ moviesFound, movieId, loading, err }) => {
     const [isOpen1, setIsOpen1] = useState(true)
-
     const handleSelectedMovie = (id) => {
         movieId(id)
     }
@@ -17,20 +15,21 @@ const MovieResults = ({ moviesFound, movieId }) => {
                     {isOpen1 ? "–" : "+"}
                 </button>
                 {isOpen1 && (
-                    <ul className="list">
-                        {moviesFound?.map((movie) => (
-                            <li key={movie.imdbID} onClick={() => handleSelectedMovie(movie.imdbID)}>
-                                <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                                <h3>{movie.Title}</h3>
-                                <div>
-                                    <p>
-                                        <span>📆</span>
-                                        <span>{movie.Year}</span>
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    loading ? <center><h2 style={{ marginTop: '15rem' }}>Loading...</h2></center> : err === true ? <center><h2 style={{ marginTop: '15rem' }}>No Movies Found...</h2></center> :
+                        <ul className="list">
+                            {moviesFound?.map((movie) => (
+                                <li key={movie.imdbID} onClick={() => handleSelectedMovie(movie.imdbID)}>
+                                    <img src={movie.Poster} alt={`${movie.Title} poster`} />
+                                    <h3>{movie.Title}</h3>
+                                    <div>
+                                        <p>
+                                            <span>📆</span>
+                                            <span>{movie.Year}</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
                 )}
             </div>
         </>
